@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,19 +12,41 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { postLoginAdmin } from '../../../api/adminApi';
+import { postAPICall } from '../../../api/common/rxApiStoreBase';
+import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
+export default function AdminSignIn() {
+  const navigate = useNavigate() 
+
+  const [errorMessage,setErrorMessage] = useState('')
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const apiRequestData =await postLoginAdmin(data.get('email'),data.get('password'));
+    const postLoginApi$ = await postAPICall(apiRequestData.apiEndPoint,apiRequestData.configData)
+
+    postLoginApi$.subscribe({
+      next:(res)=>{
+        if(res.success && res.code===200){
+          localStorage.setItem('id_token',res.token)
+          localStorage.setItem('role',res.role)
+          navigate('/admin')
+        }else{
+          setErrorMessage(res.msg)
+        }
+      },
+      error:(err)=>{
+        console.log("err:",err);
+        setErrorMessage("something went wrong")
+      }
+    })
   };
 
   return (
@@ -45,6 +67,10 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {
+            errorMessage!=="" &&
+              <Alert severity="error" className='w-full mt-4'>{errorMessage}</Alert>
+          }
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -55,6 +81,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={()=>{setErrorMessage("")}}
             />
             <TextField
               margin="normal"
@@ -65,6 +92,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={()=>{setErrorMessage("")}}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

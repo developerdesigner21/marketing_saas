@@ -178,7 +178,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     flexGrow: 1,
                   }}
                 >
-                  <Box
+                  {/* <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -187,7 +187,7 @@ function AppAppBar({ mode, toggleColorMode }) {
                     }}
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-                  </Box>
+                  </Box> */}
                   <MenuItem onClick={() => scrollToSection('features')}>
                     Features
                   </MenuItem>
@@ -205,25 +205,20 @@ function AppAppBar({ mode, toggleColorMode }) {
                   <MenuItem>
                     <Button
                       color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
+                      variant="outlined"
                       sx={{ width: '100%' }}
                     >
-                      Sign up
+                      Book Demo
                     </Button>
                   </MenuItem>
                   <MenuItem>
                     <Button
                       color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
+                      variant="contained"
                       sx={{ width: '100%' }}
+                      onClick={()=>{navigate("/login")}}
                     >
-                      Sign in
+                      Free Trial
                     </Button>
                   </MenuItem>
                 </Box>

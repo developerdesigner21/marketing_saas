@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SuperAdmin from "./components/Admin/SuperAdmin";
-import AdminSignIn from "./components/Admin/AdminSignIn";
+import AdminSignIn from "./components/Admin/Authentication/AdminSignIn";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,7 +11,7 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import UserSignIn from "./components/LandingPage/UserSignIn";
+import UserSignIn from "./components/User/Authentication/UserSignIn";
 import User from "./components/User/User";
 
 function App() {
@@ -26,12 +26,12 @@ function App() {
   };
 
   const UserPrivateRoutes = () => {
-    let isAuthorized = localStorage.getItem("id_token") && localStorage.getItem("role")==="admin";
+    let isAuthorized = localStorage.getItem("id_token") && localStorage.getItem("role")==="user";
     return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
   };
 
   const UserNotLoginRoutes = () => {
-    let isAuthorized = localStorage.getItem("id_token") && localStorage.getItem("role")==="admin";
+    let isAuthorized = localStorage.getItem("id_token") && localStorage.getItem("role")==="user";
     return isAuthorized ? <Navigate to="/user" /> : <Outlet />;
   };
 
@@ -62,7 +62,7 @@ function App() {
           </Route>
 
           <Route element={<UserPrivateRoutes/>}>
-            <Route path="/user" element={<User />} />
+            <Route path="/user/*" element={<User />} />
           </Route>
 
         </Routes>
