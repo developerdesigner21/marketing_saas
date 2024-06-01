@@ -117,7 +117,7 @@ export default function TagManage() {
           <Paper sx={{ width: "100%" }}>
             <TableContainer
               sx={{ maxHeight: availableHeight }}
-              className="scrollTest"
+              className={styles.custom_scroll}
             >
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
