@@ -14,17 +14,17 @@ import MoreFeature from "./Content/MoreFeature/MoreFeature";
 import Phonebook from "./Content/Phonebook/Phonebook";
 import Broadcast from "./Content/Broadcast/Broadcast";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center">
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}.
+//     </Typography>
+//   );
+// }
 
 let theme = createTheme({
   palette: {
@@ -172,6 +172,7 @@ theme = {
 export default function User() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isNavOpen, setIsNavOpen] = React.useState(true);
+  
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   let drawerWidth = isNavOpen ? 256 : 50;
@@ -211,15 +212,16 @@ export default function User() {
           <Header onDrawerToggle={handleDrawerToggle} />
           <Box
             component="main"
-            sx={{ flex: 1, p:1}}
           >
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/Broadcast" element={<Broadcast />} />
-              <Route path="/Phonebook" element={<Phonebook />} />
-              <Route path="/Inbox" element={<Inbox />} />
-              <Route path="/MoreFeature" element={<MoreFeature />} />
-            </Routes>
+            <div style={{width:`calc(100vw - ${isSmUp ? (drawerWidth) : 0}px)`,height:`calc(100vh - 144px)`,overflow:"auto"}} >
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/Broadcast" element={<Broadcast />} />
+                <Route path="/Phonebook" element={<Phonebook />} />
+                <Route path="/Inbox" element={<Inbox />} />
+                <Route path="/MoreFeature" element={<MoreFeature />} />
+              </Routes>
+            </div>
           </Box>
           {/* <Box component="footer" sx={{ p: 2, bgcolor: "#eaeff1" }}>
             <Copyright />

@@ -170,14 +170,6 @@ function Header(props) {
               </Grid>
             </Grid>
           </Toolbar>
-        </AppBar>
-        <AppBar
-          component="div"
-          color="primary"
-          position="static"
-          elevation={0}
-          sx={{ zIndex: 0 }}
-        >
           <Toolbar>
             <Grid container alignItems="center" spacing={1}>
               <Grid item xs className="flex justify-start">
@@ -204,14 +196,7 @@ function Header(props) {
               </Grid>
             </Grid>
           </Toolbar>
-        </AppBar>
-        {currentSectionData?.tabs && currentSectionData?.tabs?.length > 0 && (
-          <AppBar
-            component="div"
-            position="static"
-            elevation={0}
-            sx={{ zIndex: 0 }}
-          >
+          {currentSectionData?.tabs && currentSectionData?.tabs?.length > 0 && (
             <Tabs
               value={selectedTab}
               onChange={handleChange}
@@ -224,8 +209,8 @@ function Header(props) {
                 return <Tab value={tab.value} label={tab.name} />;
               })}
             </Tabs>
-          </AppBar>
-        )}
+          )}
+        </AppBar>
       </React.Fragment>
     </>
   );
