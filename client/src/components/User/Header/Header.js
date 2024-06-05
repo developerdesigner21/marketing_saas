@@ -15,6 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Menu, MenuItem } from "@mui/material";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -98,6 +99,22 @@ function Header(props) {
 
   const [currentSectionData, setCurrentSectionData] = useState({});
   const [selectedTab, setSelectedTab] = useState("");
+  const [myAccountElm,setMyAccountElm]=useState(null);
+  const [openMyAccount, setMyAccount]=useState(false);
+
+  const handleCloseMyAccount = () => {
+     setMyAccountElm(null);
+     setMyAccount(false);
+  }
+  const handleLogOut = () => {
+    localStorage.clear();
+    navigate('/login');
+    
+  }
+  const handleOpenMyAccount = (e) => {
+    setMyAccountElm(e.currentTarget);
+    setMyAccount(true)
+  }
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -164,9 +181,15 @@ function Header(props) {
                 </Tooltip>
               </Grid>
               <Grid item>
-                <IconButton color="inherit" sx={{ p: 0.5 }}>
+                <IconButton color="inherit" sx={{ p: 0.5 }} onClick={handleOpenMyAccount}>
                   <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
                 </IconButton>
+
+                <Menu anchorEl={myAccountElm} open={openMyAccount} onClose={handleCloseMyAccount}>
+                  <MenuItem onClick={handleCloseMyAccount}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
+                </Menu>
+
               </Grid>
             </Grid>
           </Toolbar>
